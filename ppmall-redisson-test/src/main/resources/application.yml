@@ -1,0 +1,41 @@
+#端口
+server:
+  port: 8082 #是服务提供端为zookeeper暴露的端口，不能跟别的dubbo提供端重复
+
+#数据源
+spring:
+  datasource:
+    username: root
+    password: 1013
+    url: jdbc:mysql://localhost:3306/ppmall_study?characterEncoding=UTF-8
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  #dubbo配置
+  dubbo:
+    application: #服务名称
+      name: redisson-test
+    registry:
+      address: 192.168.184.130:2181  #zookeeper注册中心地址加端口号
+      protocol: zookeeper #指定注册中心协议
+    protocol:
+      name: dubbo #dubbo的通信协议名称
+    base-package: com.jqlmh.ppmall  #注解方式要扫描的包
+
+  #redis配置
+  redis:
+    host: 192.168.184.130
+    port: 6379
+    database: 0
+
+
+#myabtis映射文件和设置驼峰命名
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+#打印sql语句
+banner:
+  location: classpath:banner.txt
+logging:
+  level: info

@@ -1,0 +1,31 @@
+#消费端端口
+server:
+  port: 8086
+spring:
+
+  #dubbo配置
+  dubbo:
+    application: #服务名称
+      name: order-web
+    registry:
+      address: 192.168.184.130:2181  #zookeeper注册中心地址加端口号
+      protocol: zookeeper #指定注册中心协议
+    protocol:
+      name: dubbo #dubbo的通信协议名称
+    base-package: com.jqlmh.ppmall  #注解方式要扫描的包
+    consumer:
+      timeout: 100000 #访问提供端服务的超时时间，默认是1000毫秒
+      check: false  #启动消费端时，是否检查服务端能否正常访问。如果选择true，那启动消费端时，必须保证提供端服务正常，否则接口无法注入。
+
+  #thymeleaf配置
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5
+logging:
+  level:
+    com:
+      jqlmh:
+        ppmall:
+          order:
+            controller:
+              level: debug

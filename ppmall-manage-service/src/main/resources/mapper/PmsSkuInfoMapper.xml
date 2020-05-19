@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jqlmh.ppmall.manage.mapper.PmsSkuInfoMapper">
+
+    <select id="selectSkuSaleAttrValueListBySpu" resultMap="selectSkuSaleAttrValueListBySpuMap">
+
+        SELECT sk.id   AS sk_id,sk.spu_id, sk.price, sk.sku_name, sk.sku_desc, sk.weight, sk.tm_id, sk.catalog3_id, sk.sku_default_img,
+               ssav.id AS ssav_id,ssav.sku_id, ssav.sale_attr_id, ssav.sale_attr_value_id, ssav.sale_attr_name, ssav.sale_attr_value_name
+        FROM pms_sku_sale_attr_value ssav
+                 INNER JOIN pms_sku_info sk ON ssav.sku_id = sk.id
+        WHERE sk.spu_id = 70
+        ORDER BY ssav.sku_id,
+                 ssav.sale_attr_id;
+    </select>
+
+    <resultMap id="selectSkuSaleAttrValueListBySpuMap" type="com.jqlmh.ppmall.bean.PmsSkuInfo" autoMapping="true">
+        <id column="sk_id" property="id"></id>
+
+        <collection property="skuSaleAttrValueList" ofType="com.jqlmh.ppmall.bean.PmsSkuSaleAttrValue" autoMapping="true">
+            <id column="ssav_id" property="id"></id>
+        </collection>
+    </resultMap>
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jqlmh.ppmall.manage.mapper.PmsBaseAttrInfoMapper">
+
+    <select id="selectAttrValueListByAttrId" resultMap="selectAttrValueListByAttrIdMap">
+        SELECT
+        ba.id as ba_id, ba.attr_name, ba.catalog3_id, ba.is_enabled,
+        bv.id as bv_id, bv.value_name, bv.attr_id, bv.is_enabled
+        FROM
+        pms_base_attr_info ba
+        INNER JOIN pms_base_attr_value bv ON ba.id = bv.attr_id
+        WHERE
+        bv.id IN
+        <foreach collection="valueIds" open="(" close=")" separator="," item="valueId">
+            #{valueId}
+        </foreach>
+    </select>
+
+    <resultMap id="selectAttrValueListByAttrIdMap" type="com.jqlmh.ppmall.bean.PmsBaseAttrInfo" autoMapping="true">
+        <id column="ba_id" property="id"></id>
+        <collection property="attrValueList" ofType="com.jqlmh.ppmall.bean.PmsBaseAttrValue" autoMapping="true">
+            <id column="bv_id" property="id"></id>
+        </collection>
+    </resultMap>
+</mapper>

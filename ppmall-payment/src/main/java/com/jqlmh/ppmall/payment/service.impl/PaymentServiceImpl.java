@@ -9,7 +9,7 @@ import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.jqlmh.ppmall.bean.PaymentInfo;
 import com.jqlmh.ppmall.payment.mapper.PaymentInfoMapper;
 import com.jqlmh.ppmall.service.PaymentService;
-import com.jqlmh.ppmall.util.ActiveMQUtil;
+import com.jqlmh.ppmall.util.ActiveMqUtil;
 import org.apache.activemq.ScheduledMessage;
 import org.apache.activemq.command.ActiveMQMapMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class PaymentServiceImpl implements PaymentService {
 	private PaymentInfoMapper paymentInfoMapper;
 
 	@Autowired
-	private ActiveMQUtil activeMQUtil;
+	private ActiveMqUtil activeMQUtil;
 
 	@Autowired
 	private AlipayClient alipayClient;

@@ -23,9 +23,9 @@ public class AlipayConfig {
 	@Value("${app_id}")
 	private String app_id;
 
-	public final static String format = "JSON";
-	public final static String charset = "utf-8";
-	public final static String sign_type = "RSA2";
+	private final static String FORMAT = "JSON";
+	private final static String CHARSET = "utf-8";
+	private final static String SIGN_TYPE = "RSA2";
 
 	public static String return_payment_url;
 	public static String notify_payment_url;
@@ -54,7 +54,7 @@ public class AlipayConfig {
 
 	@Bean
 	public AlipayClient alipayClient() {
-		AlipayClient alipayClient = new DefaultAlipayClient(alipay_url, app_id, app_private_key, format, charset, alipay_public_key, sign_type);
+		AlipayClient alipayClient = new DefaultAlipayClient(alipay_url, app_id, app_private_key, FORMAT, CHARSET, alipay_public_key, SIGN_TYPE);
 		return alipayClient;
 	}
 }

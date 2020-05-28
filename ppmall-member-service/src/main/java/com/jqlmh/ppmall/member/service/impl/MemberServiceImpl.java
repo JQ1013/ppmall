@@ -68,7 +68,7 @@ public class MemberServiceImpl implements MemberService {
 
 		try (Jedis jedis = redisUtil.getJedis()) {
 			//能连接redis
-			String memberKey = RedisConst.OMSCARTITEM_PREFIX + umsMember.getUsername()+umsMember.getPassword() + RedisConst.UMSMEMBER_INFO_SUFFIX; //member:密码:info
+			String memberKey = RedisConst.OMS_CART_ITEM_PREFIX + umsMember.getUsername()+umsMember.getPassword() + RedisConst.UMS_MEMBER_INFO_SUFFIX; //member:密码:info
 
 			if (jedis != null) {
 
@@ -115,7 +115,7 @@ public class MemberServiceImpl implements MemberService {
 
 		try (Jedis jedis = redisUtil.getJedis()) {
 			if (jedis != null) {
-				String memberTokenKey = RedisConst.OMSCARTITEM_PREFIX + memberId + RedisConst.UMSMEMBER_TOKEN_SUFFIX; //member:用户id:token
+				String memberTokenKey = RedisConst.OMS_CART_ITEM_PREFIX + memberId + RedisConst.UMS_MEMBER_TOKEN_SUFFIX; //member:用户id:token
 				jedis.setex(memberTokenKey, 60 * 60 * 2, token);
 			}
 		} catch (Exception e) {
@@ -143,7 +143,7 @@ public class MemberServiceImpl implements MemberService {
 	 * @return
 	 */
 	@Override
-	public UmsMember CheckSocialLoginMember(String sourceUid) {
+	public UmsMember checkSocialLoginMember(String sourceUid) {
 		Example example = new Example(UmsMember.class);
 		example.createCriteria().andEqualTo("sourceUid", sourceUid);
 		return memberMapper.selectOneByExample(example);

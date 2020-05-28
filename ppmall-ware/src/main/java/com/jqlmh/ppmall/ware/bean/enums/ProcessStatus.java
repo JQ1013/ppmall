@@ -1,45 +1,85 @@
 package com.jqlmh.ppmall.ware.bean.enums;
 
 /**
- * @param
- * @return
+ * 枚举类:订单状态
+ *
+ * @author LMH
+ * @create 2020-04-26 10:53
  */
 public enum ProcessStatus {
-      UNPAID("未支付",OrderStatus.UNPAID),
-      PAID("已支付",OrderStatus.PAID),
-      NOTIFIED_WARE("已通知仓储",OrderStatus.PAID),
-      WAITING_DELEVER("待发货",OrderStatus.WAITING_DELEVER),
-      STOCK_EXCEPTION("库存异常",OrderStatus.PAID),
-      DELEVERED("已发货",OrderStatus.DELEVERED),
-      CLOSED("已关闭",OrderStatus.CLOSED),
-      FINISHED("已完结",OrderStatus.FINISHED) ,
-      PAY_FAIL("支付失败",OrderStatus.UNPAID),
-      SPLIT("订单已拆分",OrderStatus.SPLIT);
+	/**
+	 * 未支付
+	 */
+	UNPAID("未支付", OrderStatus.UNPAID),
 
-    private String comment ;
-    private OrderStatus orderStatus;
+	/**
+	 * 已支付
+	 */
+	PAID("已支付", OrderStatus.PAID),
 
-    ProcessStatus(String comment, OrderStatus orderStatus){
-        this.comment=comment;
-        this.orderStatus=orderStatus;
-    }
+	/**
+	 * 已通知仓储
+	 */
+	NOTIFIED_WARE("已通知仓储", OrderStatus.PAID),
 
-    public String getComment() {
-        return comment;
-    }
+	/**
+	 * 待发货
+	 */
+	WAITING_DELIVER("待发货", OrderStatus.WAITING_DELIVER),
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
+	/**
+	 * 库存异常
+	 */
+	STOCK_EXCEPTION("库存异常", OrderStatus.PAID),
 
-    public OrderStatus getOrderStatus() {
-        return orderStatus;
-    }
+	/**
+	 * 已发货
+	 */
+	DELIVERED("已发货", OrderStatus.DELIVERED),
 
-    public void setOrderStatus(OrderStatus orderStatus) {
-        this.orderStatus = orderStatus;
-    }
+	/**
+	 * 已关闭
+	 */
+	CLOSED("已关闭", OrderStatus.CLOSED),
 
+	/**
+	 * 已完结
+	 */
+	FINISHED("已完结", OrderStatus.FINISHED),
+
+	/**
+	 * 支付失败
+	 */
+	PAY_FAIL("支付失败", OrderStatus.UNPAID),
+
+	/**
+	 * 订单已拆分
+	 */
+	SPLIT("订单已拆分", OrderStatus.SPLIT);
+
+	private String comment;
+	private OrderStatus orderStatus;
+
+	ProcessStatus(String comment, OrderStatus orderStatus) {
+		this.comment = comment;
+		this.orderStatus = orderStatus;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public OrderStatus getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(OrderStatus orderStatus) {
+		this.orderStatus = orderStatus;
+	}
 
 
 }

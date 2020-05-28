@@ -29,16 +29,16 @@ import java.util.*;
 public class GwareServiceImpl implements GwareService {
 
 	@Autowired
-	WareSkuMapper wareSkuMapper;
+	private WareSkuMapper wareSkuMapper;
 
 	@Autowired
-	WareInfoMapper wareInfoMapper;
+	private WareInfoMapper wareInfoMapper;
 
 	@Autowired
-	WareOrderTaskMapper wareOrderTaskMapper;
+	private WareOrderTaskMapper wareOrderTaskMapper;
 
 	@Autowired
-	WareOrderTaskDetailMapper wareOrderTaskDetailMapper;
+	private WareOrderTaskDetailMapper wareOrderTaskDetailMapper;
 
 	@Autowired
 	ActiveMQUtil activeMQUtil;
@@ -46,6 +46,7 @@ public class GwareServiceImpl implements GwareService {
 	@Value("${order.split.url}")
 	private String ORDER_URL;
 
+	@Override
 	public Integer getStockBySkuId(String skuid) {
 		Integer stock = wareSkuMapper.selectStockBySkuid(skuid);
 
@@ -53,6 +54,7 @@ public class GwareServiceImpl implements GwareService {
 	}
 
 
+	@Override
 	public boolean hasStockBySkuId(String skuid, Integer num) {
 		Integer stock = getStockBySkuId(skuid);
 
@@ -63,17 +65,20 @@ public class GwareServiceImpl implements GwareService {
 	}
 
 
+	@Override
 	public List<WareInfo> getWareInfoBySkuid(String skuid) {
 		List<WareInfo> wareInfos = wareInfoMapper.selectWareInfoBySkuid(skuid);
 		return wareInfos;
 	}
 
+	@Override
 	public List<WareInfo> getWareInfoList() {
 		List<WareInfo> wareInfos = wareInfoMapper.selectAll();
 		return wareInfos;
 	}
 
 
+	@Override
 	public void addWareInfo() {
 		WareInfo wareInfo = new WareInfo();
 		wareInfo.setAddress("1123");
@@ -89,6 +94,7 @@ public class GwareServiceImpl implements GwareService {
 	}
 
 
+	@Override
 	public Map<String, List<String>> getWareSkuMap(List<String> skuIdlist) {
 		Example example = new Example(WareSku.class);
 		example.createCriteria().andIn("skuId", skuIdlist);
@@ -126,10 +132,12 @@ public class GwareServiceImpl implements GwareService {
 	}
 
 
+	@Override
 	public void addWareSku(WareSku wareSku) {
 		wareSkuMapper.insertSelective(wareSku);
 	}
 
+	@Override
 	public List<WareSku> getWareSkuList() {
 		List<WareSku> wareSkuList = wareSkuMapper.selectWareSkuAll();
 		return wareSkuList;
@@ -151,11 +159,12 @@ public class GwareServiceImpl implements GwareService {
 	 * 出库操作  减库存和锁定库存，
 	 * @param taskExample
 	 */
+	@Override
 	@Transactional
 	public void deliveryStock(WareOrderTask taskExample) {
 		String trackingNo = taskExample.getTrackingNo();
 		WareOrderTask wareOrderTask = getWareOrderTask(taskExample.getId());
-		wareOrderTask.setTaskStatus(TaskStatus.DELEVERED);
+		wareOrderTask.setTaskStatus(TaskStatus.DELIVERED);
 		List<WareOrderTaskDetail> details = wareOrderTask.getDetails();
 		for (WareOrderTaskDetail detail : details) {
 			WareSku wareSku = new WareSku();
@@ -165,7 +174,7 @@ public class GwareServiceImpl implements GwareService {
 			wareSkuMapper.deliveryStock(wareSku);
 		}
 
-		wareOrderTask.setTaskStatus(TaskStatus.DELEVERED);
+		wareOrderTask.setTaskStatus(TaskStatus.DELIVERED);
 		wareOrderTask.setTrackingNo(trackingNo);
 		wareOrderTaskMapper.updateByPrimaryKeySelective(wareOrderTask);
 		try {
@@ -192,6 +201,7 @@ public class GwareServiceImpl implements GwareService {
 
 	}
 
+	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public List<WareOrderTask> checkOrderSplit(WareOrderTask wareOrderTask) {
 		List<WareOrderTaskDetail> details = wareOrderTask.getDetails();
@@ -255,6 +265,7 @@ public class GwareServiceImpl implements GwareService {
 	}
 
 
+	@Override
 	public WareOrderTask saveWareOrderTask(WareOrderTask wareOrderTask) {
 		wareOrderTask.setCreateTime(new Date());
 		WareOrderTask wareOrderTaskQuery = new WareOrderTask();
@@ -304,6 +315,7 @@ public class GwareServiceImpl implements GwareService {
 		session.commit();
 	}
 
+	@Override
 	@Transactional
 	public void lockStock(WareOrderTask wareOrderTask) {
 		List<WareOrderTaskDetail> wareOrderTaskDetails = wareOrderTask.getDetails();
@@ -334,7 +346,7 @@ public class GwareServiceImpl implements GwareService {
 				wareSku.setStockLocked(wareOrderTaskDetail.getSkuNum());
 				wareSku.setSkuId(wareOrderTaskDetail.getSkuId());
 
-				wareSkuMapper.incrStockLocked(wareSku); //  加行级写锁 注意索引避免表锁
+				wareSkuMapper.incrStockLocked(wareSku); //加行级写锁 注意索引避免表锁
 
 			}
 			wareOrderTask.setTaskStatus(TaskStatus.DEDUCTED);
@@ -352,6 +364,7 @@ public class GwareServiceImpl implements GwareService {
 	}
 
 
+	@Override
 	public List<WareOrderTask> getWareOrderTaskList(WareOrderTask wareOrderTask) {
 		List<WareOrderTask> wareOrderTasks = null;
 		if (wareOrderTask == null) {

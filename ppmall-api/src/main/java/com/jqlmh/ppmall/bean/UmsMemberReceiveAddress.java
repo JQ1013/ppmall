@@ -11,6 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 
+
+/**
+ * 用户收货地址实体类
+ *
+ * @author LMH
+ * @date 2020/5/26
+ */
 @Setter
 @Getter
 @ToString

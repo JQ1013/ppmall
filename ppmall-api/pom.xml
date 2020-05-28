@@ -10,7 +10,6 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.jqlmh.ppmall</groupId>
     <artifactId>ppmall-api</artifactId>
     <version>1.0-SNAPSHOT</version>
 

@@ -3,8 +3,10 @@ package com.jqlmh.ppmall.bean;
 import java.io.Serializable;
 
 /**
+ * 实体类
+ *
  * @author LMH
- * @create 2020-04-22 15:34
+ * @date 2020/5/26
  */
 public class PmsSearchCrumb implements Serializable {
 

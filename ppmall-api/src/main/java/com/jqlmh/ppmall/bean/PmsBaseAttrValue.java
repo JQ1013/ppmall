@@ -5,7 +5,12 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 import java.io.Serializable;
 
-
+/**
+ * 平台属性值实体类
+ *
+ * @author LMH
+ * @date 2020/5/26
+ */
 public class PmsBaseAttrValue implements Serializable {
     @Id
     @Column

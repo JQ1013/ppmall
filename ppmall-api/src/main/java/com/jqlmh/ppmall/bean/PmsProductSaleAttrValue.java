@@ -3,72 +3,78 @@ package com.jqlmh.ppmall.bean;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * Spu销售属性值实体类
+ *
+ * @author LMH
+ * @date 2020/5/26
+ */
 public class PmsProductSaleAttrValue implements Serializable {
-    @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id ;
+	@Id
+	@Column
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private String id;
 
-    @Column
-    private String productId;
+	@Column
+	private String productId;
 
-    @Column
-    private String saleAttrId;
+	@Column
+	private String saleAttrId;
 
-    @Column
-    private String saleAttrValueName;
+	@Column
+	private String saleAttrValueName;
 
-    @Transient
-    private String isChecked;
+	@Transient
+	private String isChecked;
 
-    public String getId() {
-        return id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public String getProductId() {
-        return productId;
-    }
+	public String getProductId() {
+		return productId;
+	}
 
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
 
-    public String getSaleAttrId() {
-        return saleAttrId;
-    }
+	public String getSaleAttrId() {
+		return saleAttrId;
+	}
 
-    public void setSaleAttrId(String saleAttrId) {
-        this.saleAttrId = saleAttrId;
-    }
+	public void setSaleAttrId(String saleAttrId) {
+		this.saleAttrId = saleAttrId;
+	}
 
-    public String getSaleAttrValueName() {
-        return saleAttrValueName;
-    }
+	public String getSaleAttrValueName() {
+		return saleAttrValueName;
+	}
 
-    public void setSaleAttrValueName(String saleAttrValueName) {
-        this.saleAttrValueName = saleAttrValueName;
-    }
+	public void setSaleAttrValueName(String saleAttrValueName) {
+		this.saleAttrValueName = saleAttrValueName;
+	}
 
-    public String getIsChecked() {
-        return isChecked;
-    }
+	public String getIsChecked() {
+		return isChecked;
+	}
 
-    public void setIsChecked(String isChecked) {
-        this.isChecked = isChecked;
-    }
+	public void setIsChecked(String isChecked) {
+		this.isChecked = isChecked;
+	}
 
-    @Override
-    public String toString() {
-        return "PmsProductSaleAttrValue{" +
-                "id=" + id +
-                ", productId=" + productId +
-                ", saleAttrId=" + saleAttrId +
-                ", saleAttrValueName='" + saleAttrValueName + '\'' +
-                ", isChecked='" + isChecked + '\'' +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "PmsProductSaleAttrValue{" +
+				"id=" + id +
+				", productId=" + productId +
+				", saleAttrId=" + saleAttrId +
+				", saleAttrValueName='" + saleAttrValueName + '\'' +
+				", isChecked='" + isChecked + '\'' +
+				'}';
+	}
 }

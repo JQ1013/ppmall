@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * Redisson配置类
+ *
  * @author LMH
  * @create 2020-04-18 22:34
  */
@@ -20,11 +22,16 @@ public class RedissonConfig {
 	@Value("${spring.redis.port:6379}")
 	private String port;
 
-	//将redisson客户端加入到spring容器中
+
+	/**
+	 * 将Redisson客户端加入到spring容器中
+	 *
+	 * @return redis客户端
+	 */
 	@Bean
-	public RedissonClient redissonClient(){
+	public RedissonClient redissonClient() {
 		Config config = new Config();
-		config.useSingleServer().setAddress("redis://"+host+":"+port);
+		config.useSingleServer().setAddress("redis://" + host + ":" + port);
 		return Redisson.create(config);
 	}
 }

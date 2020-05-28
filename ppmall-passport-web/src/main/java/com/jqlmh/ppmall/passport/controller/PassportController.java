@@ -6,7 +6,7 @@ import com.jqlmh.ppmall.bean.UmsMember;
 import com.jqlmh.ppmall.service.MemberService;
 import com.jqlmh.ppmall.util.HttpclientUtil;
 import com.jqlmh.ppmall.util.JwtUtil;
-import com.jqlmh.ppmall.util.MD5Tools;
+import com.jqlmh.ppmall.util.AbstractMd5Tools;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,12 +36,14 @@ public class PassportController {
 	/**
 	 * 处理去登录页面的请求
 	 *
-	 * @return
+	 * @param returnUrl 要返回的地址
+	 * @param model     model
+	 * @return /index
 	 */
 	@RequestMapping(value = {"/login", "/"})
-	public String login(String ReturnUrl, Model model) {
-		if (StringUtils.isNotBlank(ReturnUrl)) {
-			model.addAttribute("ReturnUrl", ReturnUrl);
+	public String login(String returnUrl, Model model) {
+		if (StringUtils.isNotBlank(returnUrl)) {
+			model.addAttribute("ReturnUrl", returnUrl);
 		}
 		return "index";
 	}
@@ -50,7 +52,7 @@ public class PassportController {
 	/**
 	 * 处理验证用户名密码的请求
 	 *
-	 * @param umsMember
+	 * @param umsMember 用户对象
 	 * @return jwt加密token
 	 */
 	@ResponseBody
@@ -60,25 +62,26 @@ public class PassportController {
 
 		//调用用户服务验证用户名和密码
 		UmsMember loginMember = memberService.checkLoginInfo(umsMember);
-		String token = "";
+		String token;
 		if (loginMember != null) {
 			//登录成功
 			//jwt制作token[key一般要进行负载加密,盐值也需要复杂的东西]
 			String memberId = loginMember.getId();
 			String nickname = loginMember.getNickname();
 
-			Map<String, Object> memberMap = new HashMap<>();
+			Map<String, Object> memberMap = new HashMap<>(16);
 			memberMap.put("memberId", memberId);
 			memberMap.put("nickname", nickname);
 
-			String ip = request.getHeader("X-Forwarded-For"); //通过nginx转发的客户端ip
+			//通过nginx转发的客户端ip
+			String ip = request.getHeader("X-Forwarded-For");
 			if (StringUtils.isBlank(ip)) {
 				ip = request.getRemoteAddr();
 				if (StringUtils.isBlank(ip)) {
 					ip = "127.0.0.1";
 				}
 			}
-			String salt = MD5Tools.MD5(ip);
+			String salt = AbstractMd5Tools.MD5(ip);
 			//按照设计的算法对参数进行加密,生成token
 			token = JwtUtil.encode("2020lmhissorich", memberMap, salt);
 
@@ -96,21 +99,23 @@ public class PassportController {
 	/**
 	 * 处理验证token真假的请求
 	 *
-	 * @param token
-	 * @return
+	 * @param token token
+	 * @return decodeTokenMap
 	 */
 	@ResponseBody
 	@RequestMapping("/verify")
-	public String verify(String token, HttpServletRequest request, String currentEncodeIPAddr) {
+	public String verify(String token, HttpServletRequest request, String currentEncodeIpAddr) {
 
-		System.err.println("拦截器所在服务器生成的request请求传递的url:" + request.getRemoteAddr()); //不用这个
-		System.err.println("原始发送请求的应用request传递的url:" + currentEncodeIPAddr); //拦截器传递过来的参数
+		//不用这个
+		System.err.println("拦截器所在服务器生成的request请求传递的url:" + request.getRemoteAddr());
+		//拦截器传递过来的参数
+		System.err.println("原始发送请求的应用request传递的url:" + currentEncodeIpAddr);
 
 
 		//通过jwt检验token真假
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap<>(16);
 
-		Map<String, Object> decodeTokenMap = JwtUtil.decode(token, "2020lmhissorich", currentEncodeIPAddr);
+		Map<String, Object> decodeTokenMap = JwtUtil.decode(token, "2020lmhissorich", currentEncodeIpAddr);
 		if (decodeTokenMap == null) {
 			return "failed";
 		}
@@ -127,24 +132,19 @@ public class PassportController {
 	 * 网址2是用户授权后回调的地址:返回code
 	 *
 	 * @param code 授权码
-	 * @return
+	 * @return 网站搜索首页
 	 */
 	@RequestMapping("/auth2.0_login")
 	public String authLogin(String code, HttpServletRequest request) {
 
 		//一、通过授权码code发送post请求到第三方网站，换取access_token
-		Map<String, String> paramMap = new HashMap<>(); //封装发送post请求的参数的map
+		//封装发送post请求的参数的map
+		Map<String, String> paramMap = new HashMap<>(16);
+		this.setParamMap(paramMap, code);
 
-		paramMap.put("client_id", "1790913327");  //App Key
-		paramMap.put("client_secret", "7a0a0888610e052d5eeb95f800719e5c"); //App 秘钥:用于获取access_token时做验证
-		// 1)code用后即毁
-		// 2)access_token在几天内是一样的
-		paramMap.put("grant_type", "authorization_code"); //固定
-		paramMap.put("redirect_uri", "http://passport.jqlmh.com/auth2.0_login"); //授权成功回调地址
-		paramMap.put("code", code); //授权码
-
+		//网址3
 		String getAccessTokenUrl = "https://api.weibo.com/oauth2/access_token?";
-		String accessTokenJson = HttpclientUtil.doPost(getAccessTokenUrl, paramMap); //网址3
+		String accessTokenJson = HttpclientUtil.doPost(getAccessTokenUrl, paramMap);
 
 		//返回的json字符串不为空,转为map,获取access_token和uid的值,保存数据库
 		String token = "";
@@ -155,14 +155,17 @@ public class PassportController {
 				String sourceUid = (String) accessTokenMap.get("uid");
 
 				//二、access_taken换取用户信息
-				String getMemberInfoUrl = "https://api.weibo.com/2/users/show.json?access_token=" + accessToken + "&uid=" + sourceUid; //网址4
+				//网址4
+				String getMemberInfoUrl =
+						"https://api.weibo.com/2/users/show.json?access_token=" + accessToken + "&uid=" + sourceUid;
 				String memberInfoJson = HttpclientUtil.doGet(getMemberInfoUrl);
+				@SuppressWarnings("unchecked")
 				Map<String, Object> memberInfoMap = JSON.parseObject(memberInfoJson, Map.class);
 
 				//三、用户信息保存数据库,用户来源类型设置为微博类型
 				UmsMember umsMember = new UmsMember();
-				String createdAt = (String) memberInfoMap.get("created_at");
-				createdAt = createdAt.replace("+0800", "CST");
+				String createdAt = (String) (memberInfoMap != null ? memberInfoMap.get("created_at") : null);
+				createdAt = createdAt != null ? createdAt.replace("+0800", "CST") : null;
 
 				//Thu Oct 16 08:38:51 +0800 2014
 				SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
@@ -173,46 +176,49 @@ public class PassportController {
 					e.printStackTrace();
 				}
 				System.err.println(createTime.getClass());
-				umsMember
-						.setSourceType(4)
-						.setAccessCode(code)
-						.setAccessToken(accessToken)
-						.setSourceUid((String) memberInfoMap.get("idstr"))
-						.setCity((String) memberInfoMap.get("location"))
-						.setCreateTime(createTime)
-						.setNickname((String) memberInfoMap.get("screen_name"))
-						.setGender((String) memberInfoMap.get("gender"));
+				if (memberInfoMap != null) {
+					umsMember
+							.setSourceType(4)
+							.setAccessCode(code)
+							.setAccessToken(accessToken)
+							.setSourceUid((String) memberInfoMap.get("idstr"))
+							.setCity((String) memberInfoMap.get("location"))
+							.setCreateTime(createTime)
+							.setNickname((String) memberInfoMap.get("screen_name"))
+							.setGender((String) memberInfoMap.get("gender"));
+				}
 
 				//保存数据库的时候先查询数据库是否已经存过了[根据sourceUid]
-				UmsMember CheckMemberSaved = memberService.CheckSocialLoginMember(umsMember.getSourceUid());
-				String memberId="";
-				if (CheckMemberSaved == null) {
+				UmsMember checkMemberSaved = memberService.checkSocialLoginMember(umsMember.getSourceUid());
+				String memberId;
+				if (checkMemberSaved == null) {
 					//数据库里面没有,保存信息
-					memberId=memberService.saveSocialLoginMember(umsMember);
+					memberId = memberService.saveSocialLoginMember(umsMember);
 					//本来可以使用主键策略自动获取新增数据的id,但是因为rpc不能将dao层的对象传给controller层,所以dao层显式地返回保存对象的id
 
 				} else {
 					//数据库已有信息
-					umsMember = CheckMemberSaved;
-					memberId=umsMember.getId();
+					umsMember = checkMemberSaved;
+					memberId = umsMember.getId();
 				}
 
 				//四、生成jwt的token,重定向到首页,携带该token
 				String nickname = umsMember.getNickname();
 
 				//jwt制作token[key一般要进行负载加密,盐值也需要复杂的东西]
-				Map<String, Object> memberMap = new HashMap<>();
-				memberMap.put("memberId", memberId); //
+				Map<String, Object> memberMap = new HashMap<>(16);
+				memberMap.put("memberId", memberId);
 				memberMap.put("nickname", nickname);
 
-				String ip = request.getHeader("X-Forwarded-For"); //通过nginx转发的客户端ip
+				//通过nginx转发的客户端ip
+				String ip = request.getHeader("X-Forwarded-For");
 				if (StringUtils.isBlank(ip)) {
 					ip = request.getRemoteAddr();
 					if (StringUtils.isBlank(ip)) {
 						ip = "127.0.0.1";
 					}
 				}
-				String salt = MD5Tools.MD5(ip);
+				String salt = AbstractMd5Tools.MD5(ip);
 				//按照设计的算法对参数进行加密,生成token
 				token = JwtUtil.encode("2020lmhissorich", memberMap, salt);
 
@@ -222,6 +228,30 @@ public class PassportController {
 			}
 		}
 		return "redirect:http://search.jqlmh.com/index?token=" + token;
+	}
+
+
+	/**
+	 * 封装发送post请求的参数的map
+	 *
+	 * @param paramMap 参数Map
+	 * @param code     授权码
+	 */
+	private void setParamMap(Map<String, String> paramMap, String code) {
+
+		//App Key
+		paramMap.put("client_id", "1790913327");
+		//App 秘钥:用于获取access_token时做验证
+		paramMap.put("client_secret", "7a0a0888610e052d5eeb95f800719e5c");
+		// 1)code用后即毁
+		// 2)access_token在几天内是一样的
+		//固定
+		paramMap.put("grant_type", "authorization_code");
+		//授权成功回调地址
+		paramMap.put("redirect_uri", "http://passport.jqlmh.com/auth2.0_login");
+		//授权码
+		paramMap.put("code", code);
+
 	}
 
 

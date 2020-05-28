@@ -39,7 +39,7 @@ public class ItemController {
 	public String item(@PathVariable("skuId") String skuId, Model model, HttpServletRequest request){
 
 		//1.查询sku信息+图片信息
-		//PmsSkuInfo pmsSkuInfo=skuService.getSkuByIdFromDB(skuId);
+		//PmsSkuInfo pmsSkuInfo=skuService.getSkuByIdFromDb(skuId);
 
 		//使用redis
 		String ip = request.getRemoteAddr();

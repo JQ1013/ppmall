@@ -13,10 +13,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * 用户实体类
+ *
  * @author LMH
- * @create 2020-04-07 21:35
+ * @date 2020/5/26
  */
-
 @Accessors(chain = true)
 @Setter
 @Getter
@@ -30,7 +31,7 @@ public class UmsMember implements Serializable {
 	private Integer memberLevelId;
 	private String username;
 	private String password;
-	private String nickname; //昵称
+	private String nickname;
 	private String phone;
 	private Integer status;
 	private Date createTime;
@@ -40,10 +41,21 @@ public class UmsMember implements Serializable {
 	private String city;
 	private String job;
 	private String personalizedSignature;
-	private Integer sourceType;  //社交登录的来源网站
-	private String sourceUid;  //社交登录的Uid
-	private String accessCode;  //社交登录的授权码
-	private String accessToken; //社交登录令牌
+	/**
+	 * 社交登录的来源网站
+	 */
+	private Integer sourceType;
+
+	/**
+	 * 社交登录的Uid
+	 */
+	private String sourceUid;
+	private String accessCode;
+
+	/**
+	 * 社交登录令牌
+	 */
+	private String accessToken;
 	private Integer integration;
 	private Integer growth;
 	private Integer luckyCount;

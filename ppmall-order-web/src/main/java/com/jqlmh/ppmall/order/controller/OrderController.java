@@ -70,7 +70,7 @@ public class OrderController {
 		List<OmsOrderItem> omsOrderItems = new ArrayList<>();
 		for (OmsCartItem omsCartItem : cartList) {
 			//购物车为选中状态
-			if (omsCartItem.getIsChecked().equals("1")) {
+			if ("1".equals(omsCartItem.getIsChecked())) {
 				OmsOrderItem omsOrderItem = new OmsOrderItem();
 				omsOrderItem
 						.setProductId(omsCartItem.getProductId())
@@ -253,7 +253,7 @@ public class OrderController {
 
 		BigDecimal settlementPrice = new BigDecimal("0");
 		for (OmsCartItem omsCartItem : omsCartItemList) {
-			if (omsCartItem.getIsChecked().equals("1")) {
+			if ("1".equals(omsCartItem.getIsChecked())) {
 				settlementPrice = settlementPrice.add(omsCartItem.getTotalPrice());
 			}
 		}

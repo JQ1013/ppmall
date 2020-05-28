@@ -14,5 +14,11 @@ import java.util.Set;
  */
 @Repository
 public interface PmsBaseAttrInfoMapper extends Mapper<PmsBaseAttrInfo> {
+	/**
+	 * 通过id属性查询属性值
+	 *
+	 * @param valueIdSet id集合
+	 * @return List<PmsBaseAttrInfo>
+	 */
 	List<PmsBaseAttrInfo> selectAttrValueListByAttrId(@Param("valueIds") Set<String> valueIdSet);
 }

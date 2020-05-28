@@ -5,7 +5,7 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 /**
- * reids的工具类
+ * redis的工具类
  * @author LMH
  * @create 2020-04-14 19:50
  */

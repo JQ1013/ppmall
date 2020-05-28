@@ -11,7 +11,7 @@ import java.util.List;
 public interface SkuService {
 	void saveSkuInfo(PmsSkuInfo pmsSkuInfo);
 
-	PmsSkuInfo getSkuByIdFromDB(String skuId);
+	PmsSkuInfo getSkuByIdFromDb(String skuId);
 
 	List<PmsSkuInfo> getSkuSaleAttrValueListBySpuId(String spuId);
 

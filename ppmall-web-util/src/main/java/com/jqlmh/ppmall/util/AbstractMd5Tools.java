@@ -11,11 +11,11 @@ import java.security.MessageDigest;
  * @see  [相关类/方法]
  * @since  [产品/模块版本]
  */
-public abstract class MD5Tools
+public abstract class AbstractMd5Tools
 {
-    public final static String MD5(String pwd) {
+    public static String MD5(String pwd) {
         //用于加密的字符
-        char md5String[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+        char[] md5String = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
                 'A', 'B', 'C', 'D', 'E', 'F' };
         try {
             //使用平台的默认字符集将此 String 编码为 byte序列，并将结果存储到一个新的 byte数组中

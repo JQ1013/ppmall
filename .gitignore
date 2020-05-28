@@ -1,0 +1,20 @@
+# Maven #
+*/mvnw
+*/mvnw.cmd
+*/.mvn/
+
+# IDEA #
+.idea/
+*.iml
+
+# Eclipse #
+.settings/
+.classpath
+.project
+
+data/
+
+# test #
+*/src/test/
+target/
+*/HELP.md

@@ -11,6 +11,12 @@ import javax.persistence.Id;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+/**
+ * 订单商品信息实体类
+ *
+ * @author LMH
+ * @date 2020/5/26
+ */
 @Setter
 @Getter
 @ToString

@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.jqlmh.ppmall.annotation.LoginRequired;
 import com.jqlmh.ppmall.util.CookieUtil;
 import com.jqlmh.ppmall.util.HttpclientUtil;
-import com.jqlmh.ppmall.util.MD5Tools;
+import com.jqlmh.ppmall.util.AbstractMd5Tools;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -22,14 +22,12 @@ import java.util.Objects;
  */
 @Component
 public class AuthInterceptor extends HandlerInterceptorAdapter {
+	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
 		//判断被拦截的请求的处理方法的注解上有没有@LoginRequired这个注解
 		HandlerMethod hm = (HandlerMethod) handler;
 		LoginRequired methodAnnotation = hm.getMethodAnnotation(LoginRequired.class);
-
-		StringBuffer requestURL = request.getRequestURL();
-		//System.err.println("拦截器拦截地址: "+requestURL);
 
 		//没有这个注解,请求不被拦截下来[是否拦截]
 		if (methodAnnotation == null) {
@@ -66,7 +64,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 					ip = "127.0.0.1";
 				}
 			}
-			String salt = MD5Tools.MD5(ip);
+			String salt = AbstractMd5Tools.MD5(ip);
 
 			//调用认证中心验证token:返回字符串
 			String authenticatedJson = HttpclientUtil.doGet("http://passport.jqlmh.com/verify?token=" + token + "&currentEncodeIPAddr=" + salt);

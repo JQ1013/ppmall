@@ -1,32 +1,53 @@
 package com.jqlmh.ppmall.util;
 
 /**
+ * redis的key命名常量类
+ *
  * @author LMH
  * @create 2020-04-14 20:46
  */
 
 public class RedisConst {
 
-	//sku相关
-	public static final String SKU_PREFIX="sku:";
-	public static final String SKUINFO_SUFFIX=":info";
+	/**
+	 * SKU的redis前缀
+	 */
+	public static final String SKU_PREFIX = "sku:";
 
-	//member相关
-	public static final String OMSCARTITEM_PREFIX="member:";
+	/**
+	 * SKU信息的redis后缀
+	 */
+	public static final String SKU_INFO_SUFFIX = ":info";
 
-	//购物车
-	public static final String OMSCARTITEM_SUFFIX=":cart";
+	/**
+	 * 购物车信息的redis后缀
+	 */
+	public static final String OMS_CART_ITEM_SUFFIX = ":cart";
 
-	//用户信息
-	public static final String UMSMEMBER_INFO_SUFFIX=":info";
-	//用户token
-	public static final String UMSMEMBER_TOKEN_SUFFIX=":token";
-
-	//订单交易码
-	public static final String MEMBER_TRADECODE_SUFFIX=":tradeCode";
-
+	/**
+	 * 购物车信息的redis前缀
+	 */
+	public static final String OMS_CART_ITEM_PREFIX = "member:";
 
 
-	//分布式锁
-	public static final String SKULOCK_SUFFIX=":lock";
+	/**
+	 * 用户信息的redis后缀
+	 */
+	public static final String UMS_MEMBER_INFO_SUFFIX = ":info";
+
+	/**
+	 * 用户Token后缀
+	 */
+	public static final String UMS_MEMBER_TOKEN_SUFFIX = ":token";
+
+	/**
+	 * 订单交易码后缀
+	 */
+	public static final String MEMBER_TRADE_CODE_SUFFIX = ":tradeCode";
+
+
+	/**
+	 * 分布式锁后缀
+	 */
+	public static final String SKU_LOCK_SUFFIX = ":lock";
 }

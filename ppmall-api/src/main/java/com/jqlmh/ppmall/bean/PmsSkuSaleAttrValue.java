@@ -7,8 +7,10 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * @param
- * @return
+ * Sku销售属性实体类
+ *
+ * @author LMH
+ * @date 2020/5/26
  */
 public class PmsSkuSaleAttrValue implements Serializable {
 

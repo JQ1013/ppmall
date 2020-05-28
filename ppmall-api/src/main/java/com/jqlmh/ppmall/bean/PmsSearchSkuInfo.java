@@ -6,8 +6,10 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * @param
- * @return
+ * Sku信息实体类
+ *
+ * @author LMH
+ * @date 2020/5/26
  */
 public class PmsSearchSkuInfo implements Serializable {
 

@@ -57,10 +57,13 @@ public class CookieUtil {
                 cookieValue = URLEncoder.encode(cookieValue, "utf-8");
             }
             Cookie cookie = new Cookie(cookieName, cookieValue);
-            if (cookieMaxage >= 0)
+            if (cookieMaxage >= 0) {
                 cookie.setMaxAge(cookieMaxage);
+            }
             if (null != request)// 设置域名的cookie
+            {
                 cookie.setDomain(getDomainName(request));
+            }
             // 在域名的根路径下保存
             cookie.setPath("/");
             response.addCookie(cookie);
@@ -76,7 +79,7 @@ public class CookieUtil {
     private static final String getDomainName(HttpServletRequest request) {
         String domainName = null;
         String serverName = request.getRequestURL().toString();
-        if (serverName == null || serverName.equals("")) {
+        if (serverName == null || "".equals(serverName)) {
             domainName = "";
         } else {
             serverName = serverName.toLowerCase();

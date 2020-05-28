@@ -9,7 +9,7 @@ import com.jqlmh.ppmall.order.mapper.OmsOrderItemMapper;
 import com.jqlmh.ppmall.order.mapper.OmsOrderMapper;
 import com.jqlmh.ppmall.service.CartService;
 import com.jqlmh.ppmall.service.OrderService;
-import com.jqlmh.ppmall.util.ActiveMQUtil;
+import com.jqlmh.ppmall.util.ActiveMqUtil;
 import com.jqlmh.ppmall.util.RedisConst;
 import com.jqlmh.ppmall.util.RedisUtil;
 import org.apache.activemq.command.ActiveMQTextMessage;
@@ -45,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
 	private CartService cartService;
 
 	@Autowired
-	private ActiveMQUtil activeMQUtil;
+	private ActiveMqUtil activeMQUtil;
 
 	/**
 	 * 生成订单交易码,存入缓存,设置过期时间15min
@@ -56,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public String generateTradeCode(String memberId) {
 
-		String tradeCodeKey = RedisConst.OMSCARTITEM_PREFIX + memberId + RedisConst.MEMBER_TRADECODE_SUFFIX; //member:,memberId:tradeCode
+		String tradeCodeKey = RedisConst.OMS_CART_ITEM_PREFIX + memberId + RedisConst.MEMBER_TRADE_CODE_SUFFIX; //member:,memberId:tradeCode
 		String tradeCode = UUID.randomUUID().toString();
 
 		try (Jedis jedis = redisUtil.getJedis()) {
@@ -80,7 +80,7 @@ public class OrderServiceImpl implements OrderService {
 
 		boolean TradeCodeValid = false;
 
-		String tradeCodeKey = RedisConst.OMSCARTITEM_PREFIX + memberId + RedisConst.MEMBER_TRADECODE_SUFFIX; //member:,memberId:tradeCode
+		String tradeCodeKey = RedisConst.OMS_CART_ITEM_PREFIX + memberId + RedisConst.MEMBER_TRADE_CODE_SUFFIX; //member:,memberId:tradeCode
 		try (Jedis jedis = redisUtil.getJedis()) {
 			if (jedis != null) {
 				String tradeCodeFromCache = jedis.get(tradeCodeKey);

@@ -20,7 +20,7 @@ public interface MemberService {
 
 	String saveSocialLoginMember(UmsMember umsMember);
 
-	UmsMember CheckSocialLoginMember(String sourceUid);
+	UmsMember checkSocialLoginMember(String sourceUid);
 
 	UmsMemberReceiveAddress getReceiveAddressById(String memberReceiveAddressId);
 }

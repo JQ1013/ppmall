@@ -6,6 +6,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 
+/**
+ * Sku属性实体类
+ *
+ * @author LMH
+ * @date 2020/5/26
+ */
 public class PmsSkuAttrValue implements Serializable {
 
 	@Id

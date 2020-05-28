@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * 平台属性service接口
+ *
  * @author LMH
  * @create 2020-04-09 20:36
  */
@@ -37,7 +39,7 @@ public class AttrServiceImpl implements AttrService {
 	 * 根据三级分类的id获得对应的所有平台属性
 	 *
 	 * @param catalog3Id 三级分类id
-	 * @return 三级分类平台属性列表+对应的所有属性值
+	 * @return 三级分类平台属性列表
 	 */
 	@Override
 	public List<PmsBaseAttrInfo> attrInfoList(String catalog3Id) {
@@ -47,7 +49,7 @@ public class AttrServiceImpl implements AttrService {
 
 		for (PmsBaseAttrInfo pmsBaseAttrInfo : pmsBaseAttrInfos) {
 			Example example1 = new Example(PmsBaseAttrValue.class);
-			example1.createCriteria().andEqualTo("attrId",pmsBaseAttrInfo.getId());
+			example1.createCriteria().andEqualTo("attrId", pmsBaseAttrInfo.getId());
 			List<PmsBaseAttrValue> attrValueList = pmsBaseAttrValueMapper.selectByExample(example1);
 			pmsBaseAttrInfo.setAttrValueList(attrValueList);
 		}
@@ -71,7 +73,8 @@ public class AttrServiceImpl implements AttrService {
 	/**
 	 * 根据前端传过来的值保存属性
 	 *
-	 * @param pmsBaseAttrInfo:属性对象
+	 * @param pmsBaseAttrInfo 平台属性对象
+	 * @return String
 	 */
 	@Override
 	public String saveAttrInfo(PmsBaseAttrInfo pmsBaseAttrInfo) {
@@ -132,6 +135,7 @@ public class AttrServiceImpl implements AttrService {
 
 	/**
 	 * 获取所有的销售属性名称(平台提供的)
+	 *
 	 * @return List<PmsBaseSaleAttr>
 	 */
 	@Override
@@ -142,8 +146,9 @@ public class AttrServiceImpl implements AttrService {
 
 	/**
 	 * 根据valueId获取所有的平台属性信息(用于显示搜索后的平台属性显示)
-	 * @param valueIdSet
-	 * @return
+	 *
+	 * @param valueIdSet 所有的valueId
+	 * @return List<PmsBaseAttrInfo>
 	 */
 	@Override
 	public List<PmsBaseAttrInfo> getAttrValueListByAttrId(Set<String> valueIdSet) {
@@ -153,8 +158,9 @@ public class AttrServiceImpl implements AttrService {
 
 	/**
 	 * 根据attrId获得一个PmsBaseAttrValue对象
-	 * @param delValueId
-	 * @return
+	 *
+	 * @param delValueId 要去掉的ValueId
+	 * @return PmsBaseAttrValue
 	 */
 	@Override
 	public PmsBaseAttrValue getPmsBaseAttrValue(String delValueId) {
@@ -163,8 +169,9 @@ public class AttrServiceImpl implements AttrService {
 
 	/**
 	 * 根据主键Id获取一个PmsBaseAttrInfo对象
-	 * @param attrId
-	 * @return
+	 *
+	 * @param attrId attrId
+	 * @return PmsBaseAttrInfo
 	 */
 	@Override
 	public PmsBaseAttrInfo getPmsBaseAttrInfo(String attrId) {

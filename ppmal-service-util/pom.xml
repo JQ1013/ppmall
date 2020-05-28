@@ -10,7 +10,6 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.jqlmh.ppmall</groupId>
     <artifactId>ppmall-service-util</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -20,6 +19,12 @@
             <groupId>com.jqlmh.ppmall</groupId>
             <artifactId>ppmall-common-util</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>objenesis</artifactId>
+                    <groupId>org.objenesis</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -52,6 +57,12 @@
         <dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>reactive-streams</artifactId>
+                    <groupId>org.reactivestreams</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>

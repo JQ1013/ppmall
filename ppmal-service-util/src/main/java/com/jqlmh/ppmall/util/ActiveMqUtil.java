@@ -6,7 +6,13 @@ import org.apache.activemq.pool.PooledConnectionFactory;
 
 import javax.jms.ConnectionFactory;
 
-public class ActiveMQUtil {
+/**
+ * ActiveMq工具类
+ *
+ * @author LMH
+ * @create 2020-04-26 10:53
+ */
+public class ActiveMqUtil {
     private PooledConnectionFactory pooledConnectionFactory=null;
 
     public void init(String brokerUrl) {

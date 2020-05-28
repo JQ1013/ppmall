@@ -9,39 +9,46 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 
-import javax.jms.JMSException;
 import javax.jms.Session;
 
 /**
- * @param
- * @return
+ * @author LMH
+ * @create 2020-04-26 10:53
  */
 @Configuration
-public class ActiveMQConfig {
+public class ActiveMqConfig {
 
 	@Value("${spring.activemq.broker-url:novalue}")
-	String brokerURL;
+	private String brokerUrl;
 
 	@Value("${activemq.listener.enable:novalue}")
-	String listenerEnable;
+	private String listenerEnable;
 
 
 	@Bean
-	public ActiveMQUtil activeMQUtil() throws JMSException {
-		if (brokerURL.equals("novalue")) {
+	public ActiveMQUtil activeMqUtil() {
+		String noValue = "noValue";
+		if (noValue.equals(brokerUrl)) {
 			return null;
 		}
-		ActiveMQUtil activeMQUtil = new ActiveMQUtil();
-		activeMQUtil.init(brokerURL);
-		return activeMQUtil;
+		ActiveMQUtil activeMqUtil = new ActiveMQUtil();
+		activeMqUtil.init(brokerUrl);
+		return activeMqUtil;
 	}
 
-
-	//定义一个消息监听器连接工厂，这里定义的是点对点模式的监听器连接工厂
+	/**
+	 * 定义一个消息监听器连接工厂，这里定义的是点对点模式的监听器连接工厂
+	 *
+	 * @param activeMQConnectionFactory 连接工厂
+	 * @return DefaultJmsListenerContainerFactory
+	 */
+	@SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
 	@Bean(name = "jmsQueueListener1")
 	public DefaultJmsListenerContainerFactory jmsQueueListenerContainerFactory(ActiveMQConnectionFactory activeMQConnectionFactory) {
 		DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
-		if (!listenerEnable.equals("true")) {
+
+		String flag = "true";
+		if (!flag.equals(listenerEnable)) {
 			return null;
 		}
 
@@ -51,7 +58,6 @@ public class ActiveMQConfig {
 
 
 		//重连间隔时间
-		//factory.setRecoveryInterval(1000L);
 		factory.setSessionTransacted(false);
 		factory.setSessionAcknowledgeMode(Session.CLIENT_ACKNOWLEDGE);
 
@@ -79,8 +85,7 @@ public class ActiveMQConfig {
 
 
 	@Bean
-	public ActiveMQConnectionFactory activeMQConnectionFactory(@Value("${spring.activemq.broker-url:novalue}") String url) {
-		//activeMQConnectionFactory.setRedeliveryPolicy(redeliveryPolicy);
+	public ActiveMQConnectionFactory activeMQConnectionFactory(@Value("${spring.activemq.broker-url:noValue}") String url) {
 		return new ActiveMQConnectionFactory(
 				"admin",
 				"admin",

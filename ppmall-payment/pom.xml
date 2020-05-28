@@ -7,7 +7,6 @@
         <artifactId>ppmall-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>com.jqlmh.ppmall</groupId>
     <artifactId>ppmall-payment</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>ppmall-payment</name>
@@ -27,6 +26,12 @@
             <groupId>com.jqlmh.ppmall</groupId>
             <artifactId>ppmall-service-util</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-logging</artifactId>
+                    <groupId>commons-logging</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>

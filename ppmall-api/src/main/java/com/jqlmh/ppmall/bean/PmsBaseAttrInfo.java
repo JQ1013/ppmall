@@ -5,74 +5,79 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-
+/**
+ * 平台属性实体类
+ *
+ * @author LMH
+ * @date 2020/5/26
+ */
 public class PmsBaseAttrInfo implements Serializable {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column
-    private String id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@Column
+	private String id;
 
-    @Column
-    private String attrName;
+	@Column
+	private String attrName;
 
-    @Column
-    private String catalog3Id;
+	@Column
+	private String catalog3Id;
 
-    @Column
-    private String isEnabled;
+	@Column
+	private String isEnabled;
 
-    @Transient
-    private List<PmsBaseAttrValue> attrValueList;
+	@Transient
+	private List<PmsBaseAttrValue> attrValueList;
 
-    public String getId() {
-        return id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public String getAttrName() {
-        return attrName;
-    }
+	public String getAttrName() {
+		return attrName;
+	}
 
-    public void setAttrName(String attrName) {
-        this.attrName = attrName;
-    }
+	public void setAttrName(String attrName) {
+		this.attrName = attrName;
+	}
 
-    public String getCatalog3Id() {
-        return catalog3Id;
-    }
+	public String getCatalog3Id() {
+		return catalog3Id;
+	}
 
-    public void setCatalog3Id(String catalog3Id) {
-        this.catalog3Id = catalog3Id;
-    }
+	public void setCatalog3Id(String catalog3Id) {
+		this.catalog3Id = catalog3Id;
+	}
 
-    public String getIsEnabled() {
-        return isEnabled;
-    }
+	public String getIsEnabled() {
+		return isEnabled;
+	}
 
-    public void setIsEnabled(String isEnabled) {
-        this.isEnabled = isEnabled;
-    }
+	public void setIsEnabled(String isEnabled) {
+		this.isEnabled = isEnabled;
+	}
 
-    public List<PmsBaseAttrValue> getAttrValueList() {
-        return attrValueList;
-    }
+	public List<PmsBaseAttrValue> getAttrValueList() {
+		return attrValueList;
+	}
 
-    public void setAttrValueList(List<PmsBaseAttrValue> attrValueList) {
-        this.attrValueList = attrValueList;
-    }
+	public void setAttrValueList(List<PmsBaseAttrValue> attrValueList) {
+		this.attrValueList = attrValueList;
+	}
 
-    @Override
-    public String toString() {
-        return "PmsBaseAttrInfo{" +
-                "id=" + id +
-                ", attrName='" + attrName + '\'' +
-                ", catalog3Id=" + catalog3Id +
-                ", isEnabled='" + isEnabled + '\'' +
-                ", attrValueList=" + attrValueList +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "PmsBaseAttrInfo{" +
+				"id=" + id +
+				", attrName='" + attrName + '\'' +
+				", catalog3Id=" + catalog3Id +
+				", isEnabled='" + isEnabled + '\'' +
+				", attrValueList=" + attrValueList +
+				'}';
+	}
 }

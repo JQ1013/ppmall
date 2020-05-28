@@ -31,7 +31,7 @@ public interface CartService {
 	 * @param memberId
 	 * @return
 	 */
-	List<OmsCartItem> getCartListByMemberIdFromDB(String memberId);
+	List<OmsCartItem> getCartListByMemberIdFromDb(String memberId);
 
 	void updateCartIsChecked(String skuId, String isChecked, String memberId);
 

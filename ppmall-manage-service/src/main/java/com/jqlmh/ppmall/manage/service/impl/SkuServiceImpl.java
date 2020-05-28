@@ -92,7 +92,7 @@ public class SkuServiceImpl implements SkuService {
 	 * @return
 	 */
 	@Override
-	public PmsSkuInfo getSkuByIdFromDB(String skuId) {
+	public PmsSkuInfo getSkuByIdFromDb(String skuId) {
 		//sku商品对象
 		PmsSkuInfo pmsSkuInfo = pmsSkuInfoMapper.selectByPrimaryKey(skuId);
 
@@ -122,10 +122,10 @@ public class SkuServiceImpl implements SkuService {
 		// 链接缓存
 		Jedis jedis = redisUtil.getJedis();
 		// 查询缓存
-		String skuKey = RedisConst.SKU_PREFIX + skuId + RedisConst.SKUINFO_SUFFIX;
+		String skuKey = RedisConst.SKU_PREFIX + skuId + RedisConst.SKU_INFO_SUFFIX;
 		String skuJson = jedis.get(skuKey);
 		//分布式锁key
-		String skuLockKey = RedisConst.SKU_PREFIX + skuId + RedisConst.SKULOCK_SUFFIX;
+		String skuLockKey = RedisConst.SKU_PREFIX + skuId + RedisConst.SKU_LOCK_SUFFIX;
 
 		if (StringUtils.isNotBlank(skuJson)) {
 			System.out.println("ip为" + remoteAddr + "的同学" + Thread.currentThread().getName() + "从缓存中获取商品详情");
@@ -149,10 +149,10 @@ public class SkuServiceImpl implements SkuService {
 			String token = UUID.randomUUID().toString();
 			String IsOk = jedis.set(skuLockKey, token, "NX", "PX", 10 * 1000); //拿到锁的线程有10秒的过期时间
 			//如果设置分布式锁返回ok
-			if (StringUtils.isNotBlank(IsOk) && IsOk.equalsIgnoreCase("ok")) {
+			if (StringUtils.isNotBlank(IsOk) && "ok".equalsIgnoreCase(IsOk)) {
 				//设置成功,有权在10秒内访问数据库
 				System.out.println("ip为" + remoteAddr + "的同学" + Thread.currentThread().getName() + "有权在10秒的过期时间内访问数据库:" + skuLockKey);
-				pmsSkuInfo = getSkuByIdFromDB(skuId);
+				pmsSkuInfo = getSkuByIdFromDb(skuId);
 
 				if (pmsSkuInfo != null) {
 					// mysql查询结果存入redis

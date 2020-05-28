@@ -7,7 +7,6 @@
         <artifactId>ppmall-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>com.jqlmh.ppmall</groupId>
     <artifactId>ppmall-manage-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>ppmall-manage-service</name>

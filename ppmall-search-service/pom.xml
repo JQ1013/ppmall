@@ -7,7 +7,6 @@
         <artifactId>ppmall-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>com.jqlmh.ppmall</groupId>
     <artifactId>ppmall-search-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>ppmall-search-service</name>
@@ -27,12 +26,24 @@
             <groupId>com.jqlmh.ppmall</groupId>
             <artifactId>ppmall-service-util</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>netty</artifactId>
+                    <groupId>io.netty</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>guava</artifactId>
+                    <groupId>com.google.guava</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/io.searchbox/jest -->

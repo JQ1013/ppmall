@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 /**
- * 封装搜索参数的类
+ * 封装搜索参数的实体类
+ *
  * @author LMH
- * @create 2020-04-21 19:38
+ * @date 2020/5/26
  */
-
 public class PmsSearchParam implements Serializable {
 
 	private String catalog3Id;

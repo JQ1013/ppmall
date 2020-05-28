@@ -14,6 +14,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 订单详细信息实体类
+ *
+ * @author LMH
+ * @date 2020/5/26
+ */
 @Setter
 @Getter
 @ToString

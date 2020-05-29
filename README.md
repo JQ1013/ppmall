@@ -6,6 +6,8 @@
 <a href="https://github.com/JQ1013/ppmall/commits"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/halo-dev/halo.svg?style=flat-square"></a>
 <a href="https://github.com/JQ1013/ppmall/releases"><img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/jq1013/ppmall?color=orange&style=flat-square"></a>
 </p>
+
+
 ## 项目文档
 
 - 文档地址：<https://github.com/JQ1013/ppmall/blob/master/doc/ppmall.md>

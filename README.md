@@ -26,8 +26,8 @@ PPMall项目是一套分布式的电商系统，是面向服务的分布式架�
 
 ```lua
 ppmall
-├── ppmall-parent 			-- 父项目,做依赖的版本控制
-├── ppmall-api 				-- 实体类和service接口模块
+├── ppmall-parent 		-- 父项目,做依赖的版本控制
+├── ppmall-api 			-- 实体类和service接口模块
 ├── ppmall-common-util 		-- 通用型的第三方包，比如fastjson、httpclient、apache工具包;   
 ├── mppmal-service-util 	-- 通用service层模块
 ├── ppmall-web-util 		-- 通用web层模块
@@ -43,8 +43,8 @@ ppmall
 ├── ppmall-order-service 	-- 订单服务
 ├── ppmall-order-web 		-- 订单控制层
 ├── ppmall-passport-web 	-- 认证中心:颁发token+验证真伪
-├── ppmall-payment 			-- 支付服务
-├── ppmall-ware 			-- 前台商城系统接口
+├── ppmall-payment 		-- 支付服务
+├── ppmall-ware 		-- 前台商城系统接口
 ├── ppmall-flashsale 		-- 秒杀服务
 └── ppmall-redisson-test 	-- 框架搭建时的测试代码
 ```
